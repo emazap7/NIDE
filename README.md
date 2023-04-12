@@ -35,7 +35,10 @@ If you use NIDE or any part of it in your own work, please cite [Zappala et al](
 ## Toy data 
 The toy data has been obtained by solving analytical IDEs in 2D and 4Ds. The kernels used in both cases were convolutional kernels where the entries were given by combinations of trigonometric functions. The F function was a hyperbolic cosine. To obtain the datasets, we have randomly sampled initial conditions and solved the corresponding initial value problem for the IDEs, using our implementation of the IDE solver. The integrals have been performed with Monte-Carlo integration with 1K sampled points per interval, and the number of iterations used was set to 10, which was empirically seen to guarantee convergence to the solution.
 
-The scripts for the toy data generation can be found at ADD LINK HERE.
+The scripts for the toy data generation can be found [here](resources/NIDE_method_github.png).
+
+# Tutorial
+For an example on how to use NIDE to model dynamics, consult this [notebook](nide_spirals_example.ipynb) in which NIDE is used to model the toy dataset described above.
 
 
 # Manual Environment Creation
@@ -43,7 +46,7 @@ If the `environment.yml` file does not successfully recreate the environment for
 
 1. Create and activate an anaconda environment with Python version 3.8:
 ```
-conda create -n neural_ide python=3.10
+conda create -n neural_ide python=3.8
 conda activate neural_ide
 ```
 

@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 from tqdm import tqdm
-from torch.utils.tensorboard import SummaryWriter
 import scipy
 from sklearn.metrics import mean_squared_error
 from sklearn.decomposition import PCA
@@ -43,9 +42,6 @@ def IDE_spiral_experiment_no_adjoint(kernel, F_func, ode_func, Data, dataloaders
         else: 
             num_experiments = [int(i[3:]) for i in txt]
             num_experiments = np.array(num_experiments).max()
-         # -- logger location
-        writer = SummaryWriter(os.path.join(path_to_experiment,'run'+str(num_experiments+1)))
-        print('writer.log_dir: ',writer.log_dir)
         
         path_to_save_plots = os.path.join(path_to_experiment,'run'+str(num_experiments+1),'plots')
         path_to_save_models = os.path.join(path_to_experiment,'run'+str(num_experiments+1),'model')
@@ -53,11 +49,6 @@ def IDE_spiral_experiment_no_adjoint(kernel, F_func, ode_func, Data, dataloaders
             os.makedirs(path_to_save_plots)
         if not os.path.exists(path_to_save_models):
             os.makedirs(path_to_save_models)
-            
-        with open(os.path.join(writer.log_dir,'commandline_args.txt'), 'w') as f:
-            for key, value in args.__dict__.items(): 
-                f.write('%s:%s\n' % (key, value))
-
 
 
     obs = Data
@@ -210,14 +201,6 @@ def IDE_spiral_experiment_no_adjoint(kernel, F_func, ode_func, Data, dataloaders
                 val_loss /= counter
                 all_val_loss.append(val_loss)
 
-                writer.add_scalar('train_loss', all_train_loss[-1], global_step=i)
-                if len(all_val_loss)>0:
-                    writer.add_scalar('val_loss', all_val_loss[-1], global_step=i)
-                if args.lr_scheduler == 'ReduceLROnPlateau':
-                    writer.add_scalar('Epoch/learning_rate', optimizer.param_groups[0]['lr'], global_step=i)
-                elif args.lr_scheduler == 'CosineAnnealingLR':
-                    writer.add_scalar('Epoch/learning_rate', scheduler.get_last_lr()[0], global_step=i)
-
 
                 if i % args.plot_freq == 0:
                     obs_test, ts_test, ids_test = next(iter(loader_test))
@@ -258,22 +241,21 @@ def IDE_spiral_experiment_no_adjoint(kernel, F_func, ode_func, Data, dataloaders
                     plt.savefig(os.path.join(path_to_save_plots,'losses'))
 
                     new_times = to_np(ts_test)
-
-                    plt.figure(figsize=(8,8),facecolor='w')
                     z_p = z_test
                     z_p = to_np(z_p)
 
-                    plt.figure(1, facecolor='w')
-                    plt.plot(z_p[0,:,0],z_p[0,:,1],c='r', label='model')
+                    fig,ax = plt.subplots(figsize=(10,10),dpi=200,facecolor='w')
+                    ax.plot(z_p[0,:,0],z_p[0,:,1],c='r', label='model')
                     obs_print = to_np(obs_test)
                     
-                    plt.scatter(obs_print[0,:,0],obs_print[0,:,1],label='Data',c='blue', alpha=0.5)
-                    plt.xlabel("dim 0")
-                    plt.ylabel("dim 1")
+                    ax.scatter(obs_print[0,:,0],obs_print[0,:,1],label='Data',c='blue', alpha=0.5)
+                    ax.set_xlim(-0.6,0.6)
+                    ax.set_ylim(-0.6,0.6)
+                    ax.set_xlabel("dim 0")
+                    ax.set_ylabel("dim 1")
+                    ax.legend()
                     
-                    plt.legend()
-                    
-                    plt.savefig(os.path.join(path_to_save_plots,'plot_dim0vsdim1_epoch'+str(i)))
+                    fig.savefig(os.path.join(path_to_save_plots,'plot_dim0vsdim1_epoch'+str(i)))
 
 
                     plt.close('all')
@@ -348,14 +330,16 @@ def IDE_spiral_experiment_no_adjoint(kernel, F_func, ode_func, Data, dataloaders
             predicted_to_plot = z_p
             
             
-            plt.figure(figsize=(10,10),dpi=200,facecolor='w')
-            plt.scatter(data_to_plot[0,:,0],data_to_plot[0,:,1],label='Data')
-            plt.plot(predicted_to_plot[0,:,0],predicted_to_plot[0,:,1],label='Model',c='red',linewidth=3)
-            plt.xlabel("dim 0",fontsize=20)
-            plt.ylabel("dim 1",fontsize=20)
-            plt.xticks(fontsize=20)
-            plt.yticks(fontsize=20)
-            plt.legend(fontsize=20) 
+            fig,ax = plt.subplots(figsize=(10,10),dpi=200,facecolor='w')
+            ax.scatter(data_to_plot[0,:,0],data_to_plot[0,:,1],label='Data')
+            ax.plot(predicted_to_plot[0,:,0],predicted_to_plot[0,:,1],label='Model',c='red',linewidth=3)
+            ax.set_xlim(-0.5,0.5)
+            ax.set_ylim(-0.5,0.5)
+            ax.set_xlabel("dim 0",fontsize=20)
+            ax.set_ylabel("dim 1",fontsize=20)
+            ax.xticks(fontsize=20)
+            ax.yticks(fontsize=20)
+            ax.legend(fontsize=20) 
             
             
 

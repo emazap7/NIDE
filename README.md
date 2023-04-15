@@ -38,7 +38,9 @@ The toy data has been obtained by solving analytical IDEs in 2D and 4Ds. The ker
 The scripts for the toy data generation can be found [here](resources/NIDE_method_github.png).
 
 # Tutorial
-For an example on how to use NIDE to model dynamics, consult this [notebook](nide_spirals_example.ipynb) in which NIDE is used to model the toy dataset described above.
+For an example on how to use NIDE to model dynamics, consult this [notebook](nide_spirals_example.ipynb) in which NIDE is used to model the toy dataset described above. The animation below illustrates the fitting process for the 2D curve.
+
+![GIF](resources/NIDE_animation2.gif)
 
 
 # Manual Environment Creation

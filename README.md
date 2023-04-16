@@ -19,9 +19,6 @@ If you use NIDE or any part of it in your own work, please cite [Zappala et al](
 - [Datasets](#datasets)
 - [Tutorial](#tutorial)
 - [Manual Environment Creation](#manual-environment-creation)
-- [Requirements](#requirements)
-- [FAQ](#faq)
-- [License](#license)
 
 ## Quickstart
 Clone this repository locally:

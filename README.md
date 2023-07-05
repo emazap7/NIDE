@@ -5,7 +5,7 @@ Pytorch implementation of the Neural Integro-Differential Equations (NIDE)
 This article has been published in the Proceedings of AAAI (2023): https://ojs.aaai.org/index.php/AAAI/article/view/26315
 
 
-Citation for our work (found on Google Scholar) [Zappala et al]:
+Citation for our work (found on Google Scholar) [Zappala et al](https://ojs.aaai.org/index.php/AAAI/article/view/26315):
 ```
 @inproceedings{zappala2023neural,
   title={Neural integro-differential equations},

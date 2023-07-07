@@ -17,6 +17,7 @@ Citation for our work (found on Google Scholar) [Zappala et al](https://ojs.aaai
   year={2023}
 }
 ```
+ArXiv version (longer than AAAI version): https://arxiv.org/abs/2206.14282.
 
 ## Table of Contents
 - [Quick start](#quickstart)
